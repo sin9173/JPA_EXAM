@@ -9,8 +9,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class MemberRepositoryTest {
@@ -18,22 +16,22 @@ class MemberRepositoryTest {
     @Autowired MemberRepository memberRepository;
 
     @Test
-    @Transactional //테스트에 있을 경우 롤백
+    @Transactional //트랜젝션 처리 //테스트에 있을 경우 롤백
     @Rollback(false)
     public void testMember() throws Exception {
         //given
-        Member member = new Member();
-        member.setUsername("memberA");
+        MemberOld memberOld = new MemberOld();
+        memberOld.setUsername("memberA");
 
         //when
-        Long saveId = memberRepository.save(member);
-        Member findMember = memberRepository.find(saveId);
+        Long saveId = memberRepository.save(memberOld);
+        MemberOld findMemberOld = memberRepository.find(saveId);
 
         //then
-        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
-        Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        Assertions.assertThat(findMember).isEqualTo(member);
-        System.out.println("findMember = " + findMember);
-        System.out.println("member = " + member);
+        Assertions.assertThat(findMemberOld.getId()).isEqualTo(memberOld.getId());
+        Assertions.assertThat(findMemberOld.getUsername()).isEqualTo(memberOld.getUsername());
+        Assertions.assertThat(findMemberOld).isEqualTo(memberOld);
+        System.out.println("findMember = " + findMemberOld);
+        System.out.println("member = " + memberOld);
     }
 }
